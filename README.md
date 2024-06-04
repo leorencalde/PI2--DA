@@ -9,7 +9,7 @@ Este proyecto tiene como objetivo analizar los siniestros viales ocurridos en la
 - `datasets/`
   - `homicidios.xlsx`: Dataset principal con los datos de siniestros viales y víctimas.
 - `scripts/`
-  - `create_combined_db.py`: Script para crear la base de datos SQLite y combinar las tablas de hechos y víctimas.
+  - `create_db.py`: Script para crear la base de datos SQLite y combinar las tablas de hechos y víctimas.
   - `dashboard.py`: Script de Streamlit para generar el dashboard interactivo.
 - `EDA/`
   - `EDA_Siniestros_Viales.ipynb`: Análisis Exploratorio de Datos (EDA) del dataset.
