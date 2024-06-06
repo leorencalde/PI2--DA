@@ -37,7 +37,7 @@ def load_data():
 data = load_data()
 
 # Crear el dashboard con Streamlit
-st.title('Dashboard de Siniestros Viales en CABA')
+st.title('Análisis de Datos de Siniestros Viales en la Ciudad Autónoma de Buenos Aires')
 
 # Filtros de selección
 st.sidebar.header('Filtros')
