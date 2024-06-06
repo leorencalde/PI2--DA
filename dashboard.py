@@ -68,7 +68,7 @@ chart = alt.Chart(total_siniestros).mark_line(point=True).encode(
 
 st.altair_chart(chart, use_container_width=True)
 
-# Gráfico de incidencia de accidentes en los meses de verano
+# Gráfico de incidencia de accidentes por meses
 st.subheader('Incidencia de Accidentes por Mes')
 monthly_accidents = filtered_data.groupby(['AAAA_x', 'MM_x']).size().reset_index(name='counts')
 monthly_chart = alt.Chart(monthly_accidents).mark_bar().encode(
@@ -86,15 +86,6 @@ st.altair_chart(monthly_chart, use_container_width=True)
 st.subheader('Mapa de Siniestros Viales')
 if 'latitude' in filtered_data.columns and 'longitude' in filtered_data.columns:
     st.map(filtered_data[['latitude', 'longitude']])
-
-# Análisis de la columna "COMUNA"
-st.subheader('Comunas con Mayor Incidencia de Accidentes')
-comuna_accidents = data['COMUNA'].value_counts().reset_index()
-comuna_accidents.columns = ['Comuna', 'Número de Accidentes']
-top_comunas = comuna_accidents.head(3)
-st.write(f"La comuna con más accidentes es: {top_comunas.iloc[0, 0]} con {top_comunas.iloc[0, 1]} accidentes.")
-st.write(f"Top 3 comunas con más accidentes:")
-st.write(top_comunas)
 
 # Gráfico de comunas versus cantidad de siniestros
 st.subheader('Comunas vs Cantidad de Siniestros')
