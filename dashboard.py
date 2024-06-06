@@ -40,6 +40,13 @@ data = load_data()
 # Crear el dashboard con Streamlit
 st.title('Análisis de Datos de Siniestros Viales en la Ciudad Autónoma de Buenos Aires')
 
+# Calcular el número total de siniestros viales
+total_siniestros_viales = data['N_VICTIMAS'].sum()
+
+# Mostrar el número total de siniestros viales
+st.subheader('Número Total de Siniestros Viales (2016-2021)')
+st.metric('Total de Siniestros Viales', total_siniestros_viales)
+
 # Agregar gráfico interactivo del total de siniestros viales
 st.subheader('Total de Siniestros Viales (2016-2021)')
 total_siniestros = data.groupby(['AAAA_x']).size().reset_index(name='counts')
