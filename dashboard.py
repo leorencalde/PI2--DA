@@ -96,6 +96,20 @@ st.write(f"La comuna con más accidentes es: {top_comunas.iloc[0, 0]} con {top_c
 st.write(f"Top 3 comunas con más accidentes:")
 st.write(top_comunas)
 
+# Gráfico de comunas versus cantidad de siniestros
+st.subheader('Comunas vs Cantidad de Siniestros')
+comuna_accidents = filtered_data['COMUNA'].value_counts().reset_index()
+comuna_accidents.columns = ['Comuna', 'Número de Accidentes']
+comuna_chart = alt.Chart(comuna_accidents).mark_bar().encode(
+    x=alt.X('Comuna:O', sort='-y'),
+    y='Número de Accidentes:Q',
+    tooltip=['Comuna', 'Número de Accidentes']
+).properties(
+    title='Cantidad de Siniestros por Comuna'
+).interactive()
+
+st.altair_chart(comuna_chart, use_container_width=True)
+
 # KPI 1: Tasa de homicidios en siniestros viales
 poblacion_total = 3075646  # Población de CABA
 num_homicidios = filtered_data['ID_hecho'].nunique()
