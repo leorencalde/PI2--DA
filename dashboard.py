@@ -56,25 +56,28 @@ chart = alt.Chart(total_siniestros).mark_line(point=True).encode(
 st.altair_chart(chart, use_container_width=True)
 
 # Gráfico de incidencia de accidentes en los meses de verano
-st.subheader('Incidencia de Accidentes en los Meses de Verano')
-verano_data = data[data['MM_x'].isin([12, 1, 2])]
-verano_chart = alt.Chart(verano_data).mark_bar().encode(
-    x='MM_x:O',
-    y='count():Q',
-    tooltip=['MM_x', 'count()']
+st.subheader('Incidencia de Accidentes por Mes')
+monthly_accidents = filtered_data.groupby(['AAAA_x', 'MM_x']).size().reset_index(name='counts')
+monthly_chart = alt.Chart(monthly_accidents).mark_bar().encode(
+    x=alt.X('MM_x:O', title='Mes'),
+    y=alt.Y('counts:Q', title='Total de Siniestros'),
+    color='AAAA_x:N',
+    tooltip=['AAAA_x', 'MM_x', 'counts']
 ).properties(
-    title='Incidencia de Accidentes en Diciembre, Enero y Febrero'
+    title='Incidencia de Accidentes por Mes'
 ).interactive()
 
-st.altair_chart(verano_chart, use_container_width=True)
+st.altair_chart(monthly_chart, use_container_width=True)
 
 # Filtros de selección
 st.sidebar.header('Filtros')
-anio = st.sidebar.selectbox('Año', sorted(data['AAAA_x'].unique()))
-mes = st.sidebar.selectbox('Mes', sorted(data['MM_x'].unique()))
+anio = st.sidebar.selectbox('Año', ['Todos'] + sorted(data['AAAA_x'].unique().tolist()))
 
 # Filtrar los datos según los filtros seleccionados
-filtered_data = data[(data['AAAA_x'] == anio) & (data['MM_x'] == mes)]
+if anio != 'Todos':
+    filtered_data = data[data['AAAA_x'] == anio]
+else:
+    filtered_data = data
 
 # KPI 1: Tasa de homicidios en siniestros viales
 poblacion_total = 3075646  # Población de CABA
