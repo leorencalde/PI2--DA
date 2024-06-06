@@ -87,6 +87,15 @@ st.subheader('Mapa de Siniestros Viales')
 if 'latitude' in filtered_data.columns and 'longitude' in filtered_data.columns:
     st.map(filtered_data[['latitude', 'longitude']])
 
+# Análisis de la columna "COMUNA"
+st.subheader('Comunas con Mayor Incidencia de Accidentes')
+comuna_accidents = data['COMUNA'].value_counts().reset_index()
+comuna_accidents.columns = ['Comuna', 'Número de Accidentes']
+top_comunas = comuna_accidents.head(3)
+st.write(f"La comuna con más accidentes es: {top_comunas.iloc[0, 0]} con {top_comunas.iloc[0, 1]} accidentes.")
+st.write(f"Top 3 comunas con más accidentes:")
+st.write(top_comunas)
+
 # KPI 1: Tasa de homicidios en siniestros viales
 poblacion_total = 3075646  # Población de CABA
 num_homicidios = filtered_data['ID_hecho'].nunique()
