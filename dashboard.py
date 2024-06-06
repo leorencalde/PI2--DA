@@ -37,6 +37,16 @@ data = load_data()
 # Crear el dashboard con Streamlit
 st.title('Análisis de Datos de Siniestros Viales en la Ciudad Autónoma de Buenos Aires')
 
+# Filtros de selección
+st.sidebar.header('Filtros')
+anio = st.sidebar.selectbox('Año', ['Todos'] + sorted(data['AAAA_x'].unique().tolist()))
+
+# Filtrar los datos según los filtros seleccionados
+if anio != 'Todos':
+    filtered_data = data[data['AAAA_x'] == anio]
+else:
+    filtered_data = data
+
 # Calcular el número total de siniestros viales
 total_siniestros_viales = data['N_VICTIMAS'].sum()
 
@@ -68,16 +78,6 @@ monthly_chart = alt.Chart(monthly_accidents).mark_bar().encode(
 ).interactive()
 
 st.altair_chart(monthly_chart, use_container_width=True)
-
-# Filtros de selección
-st.sidebar.header('Filtros')
-anio = st.sidebar.selectbox('Año', ['Todos'] + sorted(data['AAAA_x'].unique().tolist()))
-
-# Filtrar los datos según los filtros seleccionados
-if anio != 'Todos':
-    filtered_data = data[data['AAAA_x'] == anio]
-else:
-    filtered_data = data
 
 # KPI 1: Tasa de homicidios en siniestros viales
 poblacion_total = 3075646  # Población de CABA
