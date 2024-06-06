@@ -25,9 +25,12 @@ def load_data():
     
     # Limpiar la columna 'EDAD' convirtiéndola a valores numéricos, manejando errores
     combined_df['EDAD'] = pd.to_numeric(combined_df['EDAD'], errors='coerce')
-
+        
     # Renombrar las columnas 'POS_Y' y 'POS_X' a 'latitude' y 'longitude'
     combined_df.rename(columns={'pos y': 'latitude', 'pos x': 'longitude'}, inplace=True)
+
+    # Eliminar los valores nulos del dataframe combinado
+    combined_df.dropna(subset=['latitude', 'longitude'], inplace=True)
     
     return combined_df
 
@@ -79,6 +82,11 @@ monthly_chart = alt.Chart(monthly_accidents).mark_bar().encode(
 
 st.altair_chart(monthly_chart, use_container_width=True)
 
+# Visualización de Mapa Siniestros Viales
+st.subheader('Mapa de Siniestros Viales')
+if 'latitude' in filtered_data.columns and 'longitude' in filtered_data.columns:
+    st.map(filtered_data[['latitude', 'longitude']])
+
 # KPI 1: Tasa de homicidios en siniestros viales
 poblacion_total = 3075646  # Población de CABA
 num_homicidios = filtered_data['ID_hecho'].nunique()
@@ -88,10 +96,6 @@ st.metric('Tasa de Homicidios en Siniestros Viales', f'{tasa_homicidios:.2f} por
 # KPI 2: Cantidad de accidentes mortales de motociclistas
 num_accidentes_motos = filtered_data[filtered_data['VICTIMA_y'] == 'MOTO']['ID_hecho'].nunique()
 st.metric('Accidentes Mortales de Motociclistas', num_accidentes_motos)
-
-# Visualización de los datos
-st.subheader('Mapa de Siniestros Viales')
-st.map(filtered_data[['latitude', 'longitude']])
 
 st.subheader('Distribución de Homicidios por Edad y Sexo')
 fig, ax = plt.subplots()
