@@ -74,3 +74,16 @@ filtered_data['VICTIMA_y'].value_counts().plot(kind='bar', ax=ax)
 ax.set_xlabel('Tipo de Participante')
 ax.set_ylabel('Cantidad')
 st.pyplot(fig)
+
+# Agregar gráfico de barras para visualizar KPIs
+st.subheader('Comparación de KPIs a lo largo del tiempo')
+kpi_data = filtered_data.groupby(['AAAA_x', 'MM_x']).agg({
+    'ID_hecho': 'nunique',
+    'VICTIMA_y': lambda x: (x == 'MOTO').sum()
+}).reset_index()
+
+fig, ax = plt.subplots()
+kpi_data.plot(kind='bar', x='AAAA_x', y=['ID_hecho', 'VICTIMA_y'], ax=ax)
+ax.set_xlabel('Año')
+ax.set_ylabel('Cantidad')
+st.pyplot(fig)
