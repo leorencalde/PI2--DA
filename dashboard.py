@@ -25,9 +25,6 @@ def load_data():
     
     # Limpiar la columna 'EDAD' convirtiéndola a valores numéricos, manejando errores
     combined_df['EDAD'] = pd.to_numeric(combined_df['EDAD'], errors='coerce')
-    
-    # Eliminar los valores nulos del dataframe combinado
-    combined_df.dropna(inplace=True)
 
     # Renombrar las columnas 'POS_Y' y 'POS_X' a 'latitude' y 'longitude'
     combined_df.rename(columns={'pos y': 'latitude', 'pos x': 'longitude'}, inplace=True)
