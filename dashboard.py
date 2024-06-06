@@ -55,6 +55,33 @@ chart = alt.Chart(total_siniestros).mark_line(point=True).encode(
 
 st.altair_chart(chart, use_container_width=True)
 
+# Gráfico de incidencia de accidentes en los meses de verano
+st.subheader('Incidencia de Accidentes en los Meses de Verano')
+verano_data = data[data['MM_x'].isin([12, 1, 2])]
+verano_chart = alt.Chart(verano_data).mark_bar().encode(
+    x='MM_x:O',
+    y='count():Q',
+    tooltip=['MM_x', 'count()']
+).properties(
+    title='Incidencia de Accidentes en Diciembre, Enero y Febrero'
+).interactive()
+
+st.altair_chart(verano_chart, use_container_width=True)
+
+# Gráfico de incidencia de accidentes durante los fines de semana
+st.subheader('Incidencia de Accidentes durante los Fines de Semana')
+data['dia_semana'] = pd.to_datetime(data['Fecha'], errors='coerce').dt.day_name()
+fin_de_semana_data = data[data['dia_semana'].isin(['Friday', 'Saturday', 'Sunday'])]
+fin_de_semana_chart = alt.Chart(fin_de_semana_data).mark_bar().encode(
+    x='dia_semana:O',
+    y='count():Q',
+    tooltip=['dia_semana', 'count()']
+).properties(
+    title='Incidencia de Accidentes durante los Fines de Semana'
+).interactive()
+
+st.altair_chart(fin_de_semana_chart, use_container_width=True)
+
 # Filtros de selección
 st.sidebar.header('Filtros')
 anio = st.sidebar.selectbox('Año', sorted(data['AAAA_x'].unique()))
