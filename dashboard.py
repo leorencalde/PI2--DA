@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import matplotlib.pyplot as plt
+import altair as alt
 
 # Función para cargar y combinar los datos desde la base de datos SQLite
 def load_data():
