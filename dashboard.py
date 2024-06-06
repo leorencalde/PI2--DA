@@ -39,6 +39,17 @@ data = load_data()
 # Crear el dashboard con Streamlit
 st.title('Análisis de Datos de Siniestros Viales en la Ciudad Autónoma de Buenos Aires')
 
+# Agregar gráfico interactivo del total de siniestros viales
+st.subheader('Total de Siniestros Viales (2016-2021)')
+total_siniestros = data.groupby(['AAAA_x']).size().reset_index(name='counts')
+chart = alt.Chart(total_siniestros).mark_line(point=True).encode(
+    x='AAAA_x:O',
+    y='counts:Q',
+    tooltip=['AAAA_x', 'counts']
+).interactive()
+
+st.altair_chart(chart, use_container_width=True)
+
 # Filtros de selección
 st.sidebar.header('Filtros')
 anio = st.sidebar.selectbox('Año', sorted(data['AAAA_x'].unique()))
