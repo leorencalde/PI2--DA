@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # Función para cargar y combinar los datos desde la base de datos SQLite
 def load_data():
-    conn = sqlite3.connect('C:/Users/aleja/OneDrive/Escritorio/Data Science/2. Labs/PI2 -DA/Base de datos SQLite/siniestros_viales.db')
+    conn = sqlite3.connect('1. Datasets/siniestros_viales.db')
     
     hechos_df = pd.read_sql_query('SELECT * FROM hechos', conn)
     victimas_df = pd.read_sql_query('SELECT * FROM victimas', conn)
