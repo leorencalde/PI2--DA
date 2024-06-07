@@ -131,3 +131,16 @@ st.subheader('Objetivo: Reducir esta tasa en un 10% en los próximos seis meses'
 st.subheader('2. Cantidad de accidentes mortales de motociclistas')
 num_accidentes_motos = filtered_data[filtered_data['VICTIMA_y'] == 'MOTO']['ID_hecho'].nunique()
 st.metric('Accidentes Mortales de Motociclistas', num_accidentes_motos)
+
+# KPI 2: Cantidad de accidentes mortales de motociclistas
+st.subheader('Accidentes Mortales de Motociclistas por Año (2016-2021)')
+accidentes_motos_anual = data[data['VICTIMA_y'] == 'MOTO'].groupby('AAAA_x')['ID_hecho'].nunique().reset_index()
+accidentes_motos_chart = alt.Chart(accidentes_motos_anual).mark_bar().encode(
+    x='AAAA_x:O',
+    y='ID_hecho:Q',
+    tooltip=['AAAA_x', 'ID_hecho']
+).properties(
+    title='Accidentes Mortales de Motociclistas por Año'
+).interactive()
+
+st.altair_chart(accidentes_motos_chart, use_container_width=True)
