@@ -105,7 +105,7 @@ st.altair_chart(comuna_chart, use_container_width=True)
 st.subheader('Propuesta de KPIs')
 
 # KPI 1: Tasa de homicidios en siniestros viales
-st.subheader('Tasa de Homicidios en Siniestros Viales')
+st.subheader('1. Tasa de Homicidios en Siniestros Viales')
 poblacion_total = 3075646  # Población de CABA
 num_homicidios = filtered_data['ID_hecho'].nunique()
 tasa_homicidios = (num_homicidios / poblacion_total) * 100000
@@ -128,32 +128,6 @@ st.altair_chart(homicidios_chart, use_container_width=True)
 st.subheader('Objetivo: Reducir esta tasa en un 10% en los próximos seis meses')
 
 # KPI 2: Cantidad de accidentes mortales de motociclistas
+st.subheader('2. Cantidad de accidentes mortales de motociclistas')
 num_accidentes_motos = filtered_data[filtered_data['VICTIMA_y'] == 'MOTO']['ID_hecho'].nunique()
 st.metric('Accidentes Mortales de Motociclistas', num_accidentes_motos)
-
-st.subheader('Distribución de Homicidios por Edad y Sexo')
-fig, ax = plt.subplots()
-filtered_data['EDAD'].hist(ax=ax, bins=30)
-ax.set_xlabel('Edad')
-ax.set_ylabel('Cantidad')
-st.pyplot(fig)
-
-st.subheader('Homicidios por Tipo de Participante')
-fig, ax = plt.subplots()
-filtered_data['VICTIMA_y'].value_counts().plot(kind='bar', ax=ax)
-ax.set_xlabel('Tipo de Participante')
-ax.set_ylabel('Cantidad')
-st.pyplot(fig)
-
-# Agregar gráfico de barras para visualizar KPIs
-st.subheader('Comparación de KPIs a lo largo del tiempo')
-kpi_data = filtered_data.groupby(['AAAA_x', 'MM_x']).agg({
-    'ID_hecho': 'nunique',
-    'VICTIMA_y': lambda x: (x == 'MOTO').sum()
-}).reset_index()
-
-fig, ax = plt.subplots()
-kpi_data.plot(kind='bar', x='AAAA_x', y=['ID_hecho', 'VICTIMA_y'], ax=ax)
-ax.set_xlabel('Año')
-ax.set_ylabel('Cantidad')
-st.pyplot(fig)
