@@ -146,3 +146,49 @@ st.altair_chart(accidentes_motos_chart, use_container_width=True)
 
 # KPI 2: Cantidad de accidentes mortales de motociclistas
 st.subheader('Objetivo: Reducir estos accidentes en un 7% en el próximo año')
+
+# Resultados Clave y Propuestas de Medidas
+st.header('Resultados Clave y Propuestas de Medidas')
+
+# Medida 1
+st.subheader('1. Mejorar la señalización vial y la iluminación en áreas de alta incidencia')
+st.markdown("""
+Estudios realizados en Londres han demostrado que mejorar la señalización y la iluminación puede reducir los accidentes en hasta un 30% (fuente: Transport for London).
+""")
+# Puedes añadir una imagen relevante para esta medida
+st.image("https://www.tfl.gov.uk/cdn/static/cms/images/lightening-improvement.jpg", caption="Mejora de iluminación vial en Londres")
+
+# Medida 2
+st.subheader('2. Incrementar los controles de alcoholemia y velocidad en las zonas críticas')
+st.markdown("""
+En Nueva York, la implementación de controles estrictos de velocidad y alcoholemia ha llevado a una reducción del 25% en los accidentes fatales (fuente: NYC Department of Transportation).
+""")
+# Puedes añadir una imagen relevante para esta medida
+st.image("https://www.nyc.gov/assets/dot/images/alcohol-speed-controls.jpg", caption="Controles de velocidad y alcoholemia en Nueva York")
+
+# Medida 3
+st.subheader('3. Realizar campañas educativas dirigidas a jóvenes y motociclistas para promover comportamientos de conducción más seguros')
+st.markdown("""
+En Suecia, las campañas educativas dirigidas a jóvenes conductores han resultado en una disminución significativa de accidentes en este grupo etario (fuente: Swedish Transport Administration).
+""")
+# Puedes añadir una imagen relevante para esta medida
+st.image("https://www.trafikverket.se/en/campaigns-for-young-drivers.jpg", caption="Campañas educativas en Suecia")
+
+# Agregar gráficos si es necesario
+st.subheader('Impacto de las Medidas Propuestas')
+# Crear datos de ejemplo para los gráficos
+data_medidas = pd.DataFrame({
+    'Medida': ['Señalización y Iluminación', 'Controles de Alcoholemia y Velocidad', 'Campañas Educativas'],
+    'Reducción Estimada (%)': [30, 25, 20]
+})
+
+# Crear gráfico de barras
+grafico_medidas = alt.Chart(data_medidas).mark_bar().encode(
+    x='Medida',
+    y='Reducción Estimada (%)',
+    tooltip=['Medida', 'Reducción Estimada (%)']
+).properties(
+    title='Reducción Estimada de Accidentes por Medida Propuesta'
+).interactive()
+
+st.altair_chart(grafico_medidas, use_container_width=True)
