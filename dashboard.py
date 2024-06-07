@@ -124,6 +124,9 @@ homicidios_chart = alt.Chart(homicidios_anual).mark_line(point=True).encode(
 
 st.altair_chart(homicidios_chart, use_container_width=True)
 
+# KPI 1: Tasa de homicidios en siniestros viales
+st.metric('Reducir esta tasa en un 10% en los próximos seis meses')
+
 # KPI 2: Cantidad de accidentes mortales de motociclistas
 num_accidentes_motos = filtered_data[filtered_data['VICTIMA_y'] == 'MOTO']['ID_hecho'].nunique()
 st.metric('Accidentes Mortales de Motociclistas', num_accidentes_motos)
