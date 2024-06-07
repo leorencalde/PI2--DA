@@ -110,6 +110,22 @@ num_homicidios = filtered_data['ID_hecho'].nunique()
 tasa_homicidios = (num_homicidios / poblacion_total) * 100000
 st.metric('Tasa de Homicidios en Siniestros Viales', f'{tasa_homicidios:.2f} por 100,000 habitantes')
 
+# KPI 1: Gráfico de la tasa de homicidios en siniestros viales cada 6 meses
+st.subheader('Tasa de Homicidios en Siniestros Viales por Semestre (2016-2021)')
+data['semestre'] = data['MM_x'].apply(lambda x: 1 if x <= 6 else 2)
+data['periodo'] = data['AAAA_x'].astype(str) + '-S' + data['semestre'].astype(str)
+homicidios_semestre = data.groupby('periodo')['ID_hecho'].nunique().reset_index()
+homicidios_semestre['tasa_homicidios'] = (homicidios_semestre['ID_hecho'] / poblacion_total) * 100000
+homicidios_chart = alt.Chart(homicidios_semestre).mark_line(point=True).encode(
+    x='periodo:O',
+    y='tasa_homicidios:Q',
+    tooltip=['periodo', 'tasa_homicidios']
+).properties(
+    title='Tasa de Homicidios en Siniestros Viales por Semestre'
+).interactive()
+
+st.altair_chart(homicidios_chart, use_container_width=True)
+
 # KPI 2: Cantidad de accidentes mortales de motociclistas
 num_accidentes_motos = filtered_data[filtered_data['VICTIMA_y'] == 'MOTO']['ID_hecho'].nunique()
 st.metric('Accidentes Mortales de Motociclistas', num_accidentes_motos)
