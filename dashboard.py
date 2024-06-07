@@ -101,6 +101,9 @@ comuna_chart = alt.Chart(comuna_accidents).mark_bar().encode(
 
 st.altair_chart(comuna_chart, use_container_width=True)
 
+# KPIs propuestos para el proyecto
+st.subheader('Propuesta de KPIs')
+
 # KPI 1: Tasa de homicidios en siniestros viales
 poblacion_total = 3075646  # Población de CABA
 num_homicidios = filtered_data['ID_hecho'].nunique()
