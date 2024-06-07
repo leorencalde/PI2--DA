@@ -143,3 +143,6 @@ accidentes_motos_chart = alt.Chart(accidentes_motos_anual).mark_bar().encode(
 ).interactive()
 
 st.altair_chart(accidentes_motos_chart, use_container_width=True)
+
+# KPI 2: Cantidad de accidentes mortales de motociclistas
+st.subheader('Objetivo: Reducir estos accidentes en un 7% en el próximo año')
