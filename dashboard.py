@@ -105,13 +105,13 @@ st.altair_chart(comuna_chart, use_container_width=True)
 st.subheader('Propuesta de KPIs')
 
 # KPI 1: Tasa de homicidios en siniestros viales
+st.subheader('Tasa de Homicidios en Siniestros Viales')
 poblacion_total = 3075646  # Población de CABA
 num_homicidios = filtered_data['ID_hecho'].nunique()
 tasa_homicidios = (num_homicidios / poblacion_total) * 100000
 st.metric('Tasa de Homicidios en Siniestros Viales', f'{tasa_homicidios:.2f} por 100,000 habitantes')
 
 # KPI 1: Gráfico de la tasa de homicidios en siniestros viales por año
-st.subheader('Tasa de Homicidios en Siniestros Viales por Año (2016-2021)')
 homicidios_anual = data.groupby('AAAA_x')['ID_hecho'].nunique().reset_index()
 homicidios_anual['tasa_homicidios'] = (homicidios_anual['ID_hecho'] / poblacion_total) * 100000
 homicidios_chart = alt.Chart(homicidios_anual).mark_line(point=True).encode(
